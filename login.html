@@ -10,17 +10,18 @@
 
   <!-- HEADER -->
   <header class="top-nav">
-    <div class="logo">Project Gagal</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="search.html">Search</a>
-      <a href="message.html">Message</a>
-    </nav>
-    <div class="auth">
-      <button class="login" onclick="location.href='login.html'">Log in</button>
-      <button class="signup" onclick="location.href='register.html'">Sign up</button>
-    </div>
-  </header>
+  <div class="brand">PROJECT GAGAL — PELAJARAN BERHASIL</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="categories.html">Categories</a>
+    <a href="archive.html">Archive</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="auth">
+    <button class="login" onclick="location.href='login.html'">Log in</button>
+    <button class="signup" onclick="location.href='register.html'">Sign up</button>
+  </div>
+</header>
 
   <!-- LOGIN FORM -->
   <main class="center-wrapper">
@@ -29,16 +30,25 @@
       <p class="subtitle">Masuk ke akunmu dan lanjutkan perjalanan projectmu.</p>
 
       <form id="login-form" class="form-stack">
-        <label>Email</label>
-        <input name="email" type="email" required />
-
-        <label>Password</label>
-        <input name="password" type="password" required />
-
-        <button class="btn-primary" type="submit">Login</button>
+        <table class="form-table">
+          <tr>
+            <td><label for="email">Email</label></td>
+            <td><input id="email" name="email" type="email" required /></td>
+          </tr>
+          <tr>
+            <td><label for="password">Password</label></td>
+            <td><input id="password" name="password" type="password" required /></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><button class="btn-primary" type="submit" style="width:100%">Login</button></td>
+          </tr>
+        </table>
       </form>
 
-      <p class="hint">Belum punya akun? <a href="register.html">Daftar sekarang</a></p>
+      <p class="hint">
+        Belum punya akun? <a href="register.html">Daftar sekarang</a>
+      </p>
     </div>
   </main>
 
