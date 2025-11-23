@@ -253,9 +253,6 @@ function nav_init(){
   }
 }
 
-/* ============================
-   CATEGORIES PAGE
-============================ */
 async function categories_init(){
   const root = document.getElementById("categories-root");
   if(!root) return;
@@ -387,10 +384,50 @@ async function archive_init(){
   }
 }
 
+/* ============================
+   SEARCH PAGE
+============================ */
+async function search_init() {
+  const form = document.getElementById("search-form");
+  const results = document.getElementById("search-results");
+  if (!form || !results) return;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const keyword = form.querySelector("input[name='keyword']").value.trim();
+    if (!keyword) {
+      results.innerHTML = `<div class="card"><p class="muted">Masukkan kata kunci pencarian.</p></div>`;
+      return;
+    }
+
+    results.innerHTML = `<div class="card"><p class="muted">Mencari "${keyword}"...</p></div>`;
+
+    try {
+      const posts = await apiFetch(`/posts?search=${encodeURIComponent(keyword)}`, { noAuth: true });
+      if (!posts || posts.length === 0) {
+        results.innerHTML = `<div class="card"><p class="muted">Tidak ada hasil untuk "${keyword}".</p></div>`;
+        return;
+      }
+
+      results.innerHTML = posts.map(p => `
+        <div class="card" style="margin-bottom:12px;">
+          <h3><a href="post.html?id=${p.id}">${escapeHtml(p.title)}</a></h3>
+          <div class="meta">${p.category || 'Uncategorized'} • ${new Date(p.created_at).toLocaleDateString()}</div>
+          <p class="excerpt">${escapeHtml(p.excerpt || p.content.slice(0,150))}...</p>
+        </div>
+      `).join("");
+
+    } catch (err) {
+      results.innerHTML = `<div class="card"><p class="muted">Gagal mencari: ${err.message}</p></div>`;
+    }
+  });
+}
+
+
 /* mount when DOM ready */
 document.addEventListener("DOMContentLoaded", ()=>{
   try { nav_init(); } catch(e){ console.error(e); }
   // initialize known page components if present
   home_init(); post_init(); login_init(); register_init();
-  dashboard_init(); create_init(); edit_init(); categories_init(); archive_init();
+  dashboard_init(); create_init(); edit_init(); categories_init(); archive_init(); search_init();
 });

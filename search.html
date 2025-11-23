@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Search — Project Gagal</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="top-nav">
+    <div class="brand">PROJECT GAGAL — PELAJARAN BERHASIL</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="categories.html">Categories</a>
+      <a href="archive.html">Archive</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div id="nav-auth" class="auth">
+      <button class="login" onclick="location.href='login.html'">Login</button>
+      <button class="signup" onclick="location.href='register.html'">Register</button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main style="max-width:1100px;margin:30px auto; padding:0 18px;">
+    <!-- Hero / search -->
+    <section class="card" style="display:flex;gap:20px;align-items:center;">
+      <div style="flex:1;">
+        <h1 style="margin-bottom:8px;">Search</h1>
+        <p class="muted">Cari artikel, tag, atau topik pembelajaran dari dokumentasi kegagalan project.</p>
+
+        <form id="search-form" style="margin-top:18px; display:flex; gap:12px;">
+          <input id="q" name="q" type="search" placeholder="Cari: judul, kategori, penulis..." 
+                 style="flex:1;padding:12px 16px;border-radius:12px;border:1px solid #dfe3ff;font-size:1rem;" />
+          <button class="btn" type="submit" style="padding:10px 18px;border-radius:12px;">Search</button>
+        </form>
+
+        <div id="recent-searches" style="margin-top:16px;">
+          <div class="muted" style="margin-bottom:8px;">Recent searches</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn ghost" data-q="layla build">Layla build</button>
+            <button class="btn ghost" data-q="kalpalata lotus">Kalpalata lotus</button>
+            <button class="btn ghost" data-q="debugging node">Debugging Node</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- illustration / artwork (uses uploaded local image path) -->
+      <div style="width:360px;display:flex;justify-content:center;">
+        <img src="/mnt/data/Layla Ui design 2242.jpg" alt="illustration" style="max-width:100%; border-radius:14px; box-shadow:0 8px 26px rgba(0,0,0,.08);" />
+      </div>
+    </section>
+
+    <!-- Results + sidebar -->
+    <section style="display:grid; grid-template-columns: 1fr 320px; gap:22px; margin-top:26px;">
+      <!-- results column -->
+      <div>
+        <div id="search-results">
+          <!-- injected by app.js; fallback message -->
+          <div class="card">
+            <p class="muted">Masukkan kata kunci dan tekan Search untuk melihat hasil.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- sidebar -->
+      <aside>
+        <div class="card" style="margin-bottom:16px;">
+          <h3 style="margin-bottom:8px;">Filter</h3>
+          <label style="display:block;margin-top:8px;font-weight:600;">Kategori</label>
+          <select id="filter-category" style="width:100%;padding:10px;border-radius:8px;margin-top:6px;">
+            <option value="">Semua</option>
+            <option>Bug</option>
+            <option>Deployment</option>
+            <option>Hardware</option>
+            <option>Research</option>
+          </select>
+
+          <label style="display:block;margin-top:12px;font-weight:600;">Urutkan</label>
+          <select id="sort-by" style="width:100%;padding:10px;border-radius:8px;margin-top:6px;">
+            <option value="relevance">Relevansi</option>
+            <option value="newest">Terbaru</option>
+            <option value="oldest">Terlama</option>
+          </select>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:8px;">Popular tags</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;">
+            <a class="tag" href="search.html?q=debugging">debugging</a>
+            <a class="tag" href="search.html?q=iot">iot</a>
+            <a class="tag" href="search.html?q=esp32">esp32</a>
+            <a class="tag" href="search.html?q=arduino">arduino</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="footer">
+    Blog dokumentasi kegagalan project — untuk pembelajaran • <a href="contact.html">Contact</a>
+  </footer>
+
+  <script src="app.js"></script>
+<script>
+  const searchInput = document.getElementById("q");
+  const resultsEl = document.getElementById("search-results");
+  const categorySel = document.getElementById("filter-category");
+  const sortSel = document.getElementById("sort-by");
+  const searchForm = document.getElementById("search-form");
+
+  let page = 1;
+  let activeQuery = "";
+
+  function loadResults(reset = false) {
+    if (!activeQuery) return;
+
+    resultsEl.innerHTML = reset ? '<div class="card"><p class="muted">Mencari...</p></div>' : resultsEl.innerHTML;
+
+    const params = new URLSearchParams({
+      q: activeQuery,
+      page,
+      category: categorySel.value || "",
+      sort: sortSel.value || "",
+    });
+
+    apiFetch(`/posts/search?${params.toString()}`)
+      .then(data => {
+        if (reset) resultsEl.innerHTML = "";
+
+        if (!data.posts?.length) {
+          if (reset) {
+            resultsEl.innerHTML = `<div class="card"><p class="muted">Tidak ada hasil untuk "${activeQuery}"</p></div>`;
+          }
+          return;
+        }
+
+        // generate card results with renderPosts from app.js
+        data.posts.forEach(post => {
+          const card = document.createElement("div");
+          card.className = "card";
+          card.style.marginBottom = "14px";
+          card.innerHTML = `
+            <h3><a href="post.html?id=${post.id}">${post.title}</a></h3>
+            <div class="meta muted" style="margin-bottom:8px;">
+              ${post.category || "Uncategorized"} • ${new Date(post.created_at).toLocaleDateString()}
+            </div>
+            <p class="muted">${post.excerpt || (post.content || "").slice(0,160)}...</p>
+          `;
+          resultsEl.appendChild(card);
+        });
+
+        if (data.nextPage) {
+          const loadMore = document.createElement("button");
+          loadMore.className = "btn ghost";
+          loadMore.textContent = "Load more";
+          loadMore.style.marginTop = "12px";
+          loadMore.onclick = () => {
+            page = data.nextPage;
+            loadMore.remove();
+            loadResults(false);
+          };
+          resultsEl.appendChild(loadMore);
+        }
+      })
+      .catch(err => {
+        resultsEl.innerHTML = `<div class="card"><p class="muted">Error: ${err.message}</p></div>`;
+      });
+  }
+
+  searchForm.addEventListener("submit", e => {
+    e.preventDefault();
+    activeQuery = (searchInput.value || "").trim();
+    if (!activeQuery) return;
+    page = 1;
+    loadResults(true);
+  });
+
+  categorySel.addEventListener("change", () => {
+    if (!activeQuery) return;
+    page = 1;
+    loadResults(true);
+  });
+
+  sortSel.addEventListener("change", () => {
+    if (!activeQuery) return;
+    page = 1;
+    loadResults(true);
+  });
+
+  document.querySelectorAll('#recent-searches .btn').forEach(b => {
+    b.addEventListener("click", () => {
+      searchInput.value = b.getAttribute("data-q");
+      searchForm.dispatchEvent(new Event("submit"));
+    });
+  });
+</script>
+</body>
+</html>
