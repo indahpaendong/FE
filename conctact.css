@@ -1,0 +1,159 @@
+/* ===========================
+   CONTACT PAGE
+=========================== */
+
+/* Wrapper tengah */
+.center-wrapper {
+  display: flex;
+  justify-content: center;  /* center horizontal */
+  align-items: center;      /* center vertical */
+  min-height: calc(100vh - 80px); /* tinggi header + footer */
+  padding: 20px;
+  box-sizing: border-box;
+
+/* Card utama */
+.big-card {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  transition: all 0.3s ease;
+}
+
+.big-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+/* Title */
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 12px;
+}
+
+/* Form */
+.form-gap {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.form-gap label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.form-gap input,
+.form-gap textarea {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+  width: 100%;
+  resize: vertical;
+}
+
+.form-gap input:focus,
+.form-gap textarea:focus {
+  border-color: #616bff;
+  box-shadow: 0 0 0 3px rgba(97, 107, 255, 0.2);
+}
+
+/* Tombol kirim */
+.btn-primary {
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #616bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: #4a56ea;
+  transform: translateY(-2px);
+}
+
+/* Row kanan */
+.right-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ===========================
+   HEADER / NAVIGATION
+=========================== */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.top-nav .brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.top-nav nav a {
+  margin: 0 16px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+.top-nav nav a:hover {
+  color: #616bff;
+}
+
+/* ===========================
+   FOOTER
+=========================== */
+.footer {
+  text-align: center;
+  padding: 16px 20px;
+  background: #f5f7ff;
+  color: #61677c;
+  font-size: 14px;
+  margin-top: 24px;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 480px) {
+  .center-wrapper {
+    padding: 12px;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .top-nav nav {
+    margin-top: 12px;
+  }
+
+  .right-row {
+    justify-content: center;
+  }
+}

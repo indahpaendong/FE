@@ -1,0 +1,196 @@
+/* ===========================
+   LOGIN / SIGNUP PAGE
+=========================== */
+
+/* Wrapper tengah */
+.center-wrapper {
+  display: flex;
+  justify-content: center; /* center horizontal */
+  align-items: center;     /* center vertical */
+  min-height: calc(100vh - 80px); /* tinggi header + footer */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Card utama */
+.form-card {
+  background: #fff;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.15);
+}
+
+/* Title dan subtitle */
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #61677c;
+  margin-bottom: 24px;
+}
+
+/* Form stack */
+.form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  text-align: left;
+}
+
+.form-stack label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.form-stack input {
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.25s ease;
+}
+
+.form-stack input:focus {
+  border-color: #616bff;
+  box-shadow: 0 0 0 3px rgba(97, 107, 255, 0.2);
+}
+
+/* Tombol */
+.btn-primary {
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #616bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  background: #4a56ea;
+  transform: translateY(-2px);
+}
+
+/* Hint / Link ke register atau login */
+.hint {
+  font-size: 14px;
+  color: #61677c;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.hint a {
+  color: #616bff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.25s ease;
+}
+
+.hint a:hover {
+  text-decoration: underline;
+}
+
+/* ===========================
+   HEADER / NAVIGATION
+=========================== */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 48px;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 99;
+}
+
+.top-nav .brand,
+.top-nav .logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.top-nav nav a {
+  margin: 0 16px;
+  text-decoration: none;
+  color: #444;
+  font-weight: 500;
+  transition: color 0.25s ease;
+}
+
+.top-nav nav a:hover {
+  color: #616bff;
+}
+
+.top-nav .auth button {
+  margin-left: 12px;
+  padding: 8px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.login {
+  background: #e7e9ff;
+  color: #333;
+}
+
+.login:hover {
+  background: #d6d9ff;
+}
+
+.signup {
+  background: #616bff;
+  color: #fff;
+}
+
+.signup:hover {
+  background: #4a56ea;
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+@media (max-width: 768px) {
+  .center-wrapper {
+    padding: 16px;
+    align-items: flex-start; /* tidak terlalu menempel header */
+  }
+}
+
+@media (max-width: 480px) {
+  .form-card {
+    padding: 30px 20px;
+  }
+
+  .top-nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .top-nav nav {
+    margin-top: 12px;
+  }
+}
